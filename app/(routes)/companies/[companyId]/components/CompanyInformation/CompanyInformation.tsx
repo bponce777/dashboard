@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { CompanyInformationProps } from "./CompanyInformation.types";
 import { User } from "lucide-react";
+import { CompanyForm } from "../CompanyForm/CompanyForm";
+import { NewContact } from "../NewContact";
 
 export function CompanyInformation(props: CompanyInformationProps) {
   const { company } = props
@@ -9,8 +11,7 @@ export function CompanyInformation(props: CompanyInformationProps) {
       <div className="rounded-lg bg-background shadow-md hover:shadow-lg p-4">
         <div>
           <Image src={company.profileImage} alt="Profile image" width={50} height={50} className="rounded-lg mb-3" />
-
-          {/* TODO COMPANY FORM*/}
+          <CompanyForm company={company} />
         </div>
       </div>
       <div className="rounded-lg bg-background shadow-md hover:shadow-lg p-4 h-min">
@@ -20,8 +21,7 @@ export function CompanyInformation(props: CompanyInformationProps) {
             Contacts
           </div>
           <div>
-            {/* TODO new contact */}
-            New contact
+            <NewContact />
           </div>
         </div>
         <p>List contacts</p>
