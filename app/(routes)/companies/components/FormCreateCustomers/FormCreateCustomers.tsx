@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
+import axios from "axios";
 import {
   Form,
   FormControl,
@@ -18,6 +19,7 @@ import { FormCreateCustomersProps } from './FormCreateCustomers.types'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { UploadButton } from '@uploadthing/react'
 import { useToast } from "@/hooks/use-toast"
+import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
   name: z.string(),
@@ -32,6 +34,7 @@ export function FormCreateCustomers(props: FormCreateCustomersProps) {
   const { toast } = useToast()
   const { setOpenModalCreate } = props
   const [photoUploaded, setPhotoUploaded] = useState(false)
+  const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,8 +48,19 @@ export function FormCreateCustomers(props: FormCreateCustomersProps) {
   })
 
   const { isValid } = form.formState
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values)
+    try {
+      axios.post("/api/company", values)
+      toast({ title: "Company created" })
+      router.refresh()
+      setOpenModalCreate(false)
+    } catch (error) {
+      toast({
+        title: "Something went wrong",
+        variant: "destructive",
+      })
+    }
   }
 
   return (
@@ -123,7 +137,7 @@ export function FormCreateCustomers(props: FormCreateCustomersProps) {
             name="cif"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Cfit</FormLabel>
+                <FormLabel>Cfi</FormLabel>
                 <FormControl>
                   <Input placeholder="B-19934" type="number" {...field} />
                 </FormControl>
@@ -136,10 +150,10 @@ export function FormCreateCustomers(props: FormCreateCustomersProps) {
             name="profileImage"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Profile image</FormLabel>
+                <FormLabel>Profile Image</FormLabel>
                 <FormControl>
                   {photoUploaded ? (
-                    <p className='text-sm'>Image uploaded</p>
+                    <p className="text-sm">Image uploaded!</p>
                   ) : (
                     <UploadButton
                       className="rounded-lg bg-slate-600/20 text-slate-800 outline-dotted outline-3"
@@ -148,18 +162,17 @@ export function FormCreateCustomers(props: FormCreateCustomersProps) {
                       onClientUploadComplete={(res: any) => {
                         form.setValue("profileImage", res?.[0].url)
                         toast({
-                          title: "uploading image"
+                          title: "Photo uploaded!"
                         })
                         setPhotoUploaded(true)
                       }}
                       onUploadError={(error: Error) => {
                         toast({
-                          title: "Error uploading image"
+                          title: "Error uploading photo"
                         })
                       }}
                     />
                   )}
-
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -32,7 +32,7 @@ export default function HeaderCompanies() {
               Crate and configure your customers
             </DialogDescription>
           </DialogHeader>
-          <FormCreateCustomers />
+          <FormCreateCustomers setOpenModalCreate={setOpenModalCreate} />
         </DialogContent>
       </Dialog>
     </div>
