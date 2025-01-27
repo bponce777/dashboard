@@ -1,11 +1,10 @@
-import { Button } from "@/components/ui/button"
-import { UserButton } from "@clerk/nextjs"
-import { CardSummary } from "./CardSummary"
-import { BookOpenCheck, List, UserRound, UsersRound, Waypoints } from "lucide-react"
-import { LastCustomers } from "@/components/LastCustomers"
-import { SalesDistributors } from "@/components/SalesDistributors"
-import { TotalSubscribers } from "./components/TotalSubscribers"
-import { ListIntegrations } from "./components/ListIntegrations"
+import { BookOpenCheck, UsersRound, Waypoints } from "lucide-react";
+import { CardSummary } from "./CardSummary";
+import { ListIntegrations } from "./components/ListIntegrations";
+import { TotalSubscribers } from "./components/TotalSubscribers";
+import { SalesDistributors } from "@/components/SalesDistributors";
+import { LastCustomers } from "@/components/LastCustomers";
+
 
 const dataCardsSummary = [
   {
@@ -34,8 +33,8 @@ const dataCardsSummary = [
 export default function Home() {
   return (
     <div>
-      <h2 className="text-3xl mb-4">Dashboard</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-x-20">
+      <h2 className="mb-4 text-2xl">Dashboard</h2>
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 lg:gap-x-20">
         {dataCardsSummary.map(({ icon, total, average, title, tooltipText }) => (
           <CardSummary
             key={title}
@@ -47,15 +46,14 @@ export default function Home() {
           />
         ))}
       </div>
-      <div className="grid grid-cols-1 xl:grid-cols-2 md:gap-x-10 mt-12">
+      <div className="grid grid-cols-1 mt-12 xl:grid-cols-2 md:gap-x-10">
         <LastCustomers />
         <SalesDistributors />
       </div>
-
       <div className="flex-col justify-center mt-12 md:gap-x-10 xl:flex xl:flex-row gap-y-4 md:gap-y-0 md:mb-10">
         <TotalSubscribers />
         <ListIntegrations />
       </div>
     </div>
-  )
+  );
 }
