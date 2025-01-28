@@ -6,8 +6,6 @@ import { z } from 'zod'
 import axios from "axios"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-
-import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import {
   Form, FormControl, FormField, FormItem, FormLabel, FormMessage

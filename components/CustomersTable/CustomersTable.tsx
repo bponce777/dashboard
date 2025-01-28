@@ -90,7 +90,6 @@ export const columns: ColumnDef<Payment>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Email
-          {/* <ArrowUpDown /> */}
         </Button>
       )
     },

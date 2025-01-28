@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation';
+
 import multiMonthPlugin from '@fullcalendar/multimonth'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -9,8 +10,11 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list'
 import { DateSelectArg, EventContentArg } from '@fullcalendar/core/index.js'
+
 import axios from 'axios';
+
 import { formatDate } from '@/lib/formatDate'
+
 import { CalendarProps } from "./Calendar.types";
 import { useToast } from "@/hooks/use-toast"
 import { ModalAddEvent } from '../ModalAddEvent/ModalAddEvent';
@@ -18,8 +22,8 @@ import { ModalAddEvent } from '../ModalAddEvent/ModalAddEvent';
 
 export function Calendar(props: CalendarProps) {
   const { companies, events } = props
-  const { toast } = useToast()
   const router = useRouter()
+  const { toast } = useToast()
   const [open, setOpen] = useState(false)
   const [onSaveNewEvent, setOnSaveNewEvent] = useState(false)
   const [selectedItem, setSelectedItem] = useState<DateSelectArg>()

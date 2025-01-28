@@ -9,6 +9,6 @@ export type FormEventProps = {
     }>
   >;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  companies: Company;
+  companies: Company[];
   setOnSaveNewEvent: Dispatch<SetStateAction<boolean>>;
-}
+};

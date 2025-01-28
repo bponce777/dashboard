@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs"
 import { redirect } from "next/navigation"
 import { Calendar } from "./components/Calendar"
 
-export default async function page() {
+export default async function TaskPage() {
   const { userId } = auth()
 
   if (!userId) {
