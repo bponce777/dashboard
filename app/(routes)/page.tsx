@@ -1,5 +1,5 @@
 import { BookOpenCheck, UsersRound, Waypoints } from "lucide-react";
-import { CardSummary } from "./CardSummary";
+import { CardSummary } from "./components/CardSummary";
 import { ListIntegrations } from "./components/ListIntegrations";
 import { TotalSubscribers } from "./components/TotalSubscribers";
 import { SalesDistributors } from "@/components/SalesDistributors";

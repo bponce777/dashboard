@@ -26,4 +26,26 @@ export async function PATCH(req: Request, { params }: { params: { companyId: str
   } catch (error: any) {
     return new NextResponse(error.message, { status: 500 })
   }
+}
+
+
+export async function DELETE(req: Request, { params }: { params: { companyId: string } }) {
+  try {
+    const { userId } = auth();
+    const { companyId } = params;
+
+    if (!userId) {
+      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+    }
+
+    const deleteCompany = await db.company.delete({
+      where: {
+        id: companyId,
+        userId,
+      }
+    })
+    return NextResponse.json(deleteCompany)
+  } catch (error: any) {
+    return new NextResponse(error.message, { status: 500 })
+  }
 } 
