@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { FormCreateCustomersProps } from './FormCreateCustomers.types'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { UploadButton } from '@uploadthing/react'
+import { UploadButton } from "@/lib/uploadthing"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from 'next/navigation'
 

@@ -1,30 +1,34 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 import axios from "axios"
-import { CompanyFormProps } from "./CompanyForm.types"
-import {
-  Form, FormControl, FormField, FormItem, FormLabel, FormMessage
-} from "@/components/ui/form"
-import {
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue
-} from "@/components/ui/select"
-import { Input } from "@/components/ui/input"
-import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+
 import { Textarea } from "@/components/ui/textarea"
-import { UploadButton } from "@uploadthing/react"
+import { Button } from "@/components/ui/button"
+import {
+  Form, FormControl, FormField, FormItem, FormLabel, FormMessage
+} from '@/components/ui/form'
+import {
+  Select,
+  SelectContent, SelectItem, SelectTrigger, SelectValue
+} from '@/components/ui/select'
+import { Input } from "@/components/ui/input"
+import { CompanyFormProps } from "./CompanyForm.types"
 import { formSchema } from "./CompanyForm.form"
+import { useToast } from "@/hooks/use-toast"
+import { UploadButton } from "@/lib/uploadthing"
+
 
 export function CompanyForm(props: CompanyFormProps) {
   const { company } = props
-  const { toast } = useToast()
   const router = useRouter()
+  const { toast } = useToast()
   const [photoUploaded, setPhotoUploaded] = useState(false)
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -34,35 +38,37 @@ export function CompanyForm(props: CompanyFormProps) {
       phone: company.phone,
       cif: company.cif,
       profileImage: company.profileImage
-    },
+    }
   })
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.patch(`/api/company/${company.id}`, values)
-      toast({ title: "Company updated" })
+      toast({
+        title: "Company updated!"
+      })
       router.refresh()
     } catch (error) {
       toast({
         title: "Something went wrong",
-        variant: "destructive",
+        variant: "destructive"
       })
     }
   }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-3">
           <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Company name</FormLabel>
                 <FormControl>
-                  <Input placeholder="name" {...field} />
+                  <Input placeholder="Company name..." type="text" {...field} />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />
@@ -78,14 +84,15 @@ export function CompanyForm(props: CompanyFormProps) {
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="select the country" />
+                      <SelectValue />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="united-kindom">United-kindom</SelectItem>
-                    <SelectItem value="colombia">Colombia</SelectItem>
-                    <SelectItem value="venezuela">Venezuela</SelectItem>
-                    <SelectItem value="francia">Fracia</SelectItem>
+                    <SelectItem value="spain">España</SelectItem>
+                    <SelectItem value="united-kingdon">United Kingdom</SelectItem>
+                    <SelectItem value="portugal">Portugal</SelectItem>
+                    <SelectItem value="grecia">Grecia</SelectItem>
+                    <SelectItem value="italia">Italia</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -97,9 +104,9 @@ export function CompanyForm(props: CompanyFormProps) {
             name="website"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Country</FormLabel>
+                <FormLabel>Website</FormLabel>
                 <FormControl>
-                  <Input placeholder="www.bponce.com" {...field} />
+                  <Input placeholder="www.rafatarrega.com" type="text" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -110,9 +117,9 @@ export function CompanyForm(props: CompanyFormProps) {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Country</FormLabel>
+                <FormLabel>Phone</FormLabel>
                 <FormControl>
-                  <Input placeholder="+57 30075454545" type="number" {...field} />
+                  <Input placeholder="+34 651 12 21 21" type="number" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -123,9 +130,9 @@ export function CompanyForm(props: CompanyFormProps) {
             name="cif"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Cfi</FormLabel>
+                <FormLabel>CIF / NIF</FormLabel>
                 <FormControl>
-                  <Input placeholder="B-19934" type="number" {...field} />
+                  <Input placeholder="B-1234567" type="text" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -138,27 +145,24 @@ export function CompanyForm(props: CompanyFormProps) {
               <FormItem>
                 <FormLabel>Profile Image</FormLabel>
                 <FormControl>
-                  {photoUploaded ? (
-                    <p className="text-sm">Image uploaded!</p>
-                  ) : (
-                    <UploadButton
-                      className="rounded-lg bg-slate-600/20 text-slate-800 outline-dotted outline-3"
-                      {...field}
-                      endpoint="profileImage"
-                      onClientUploadComplete={(res: any) => {
-                        form.setValue("profileImage", res?.[0].url)
-                        toast({
-                          title: "Photo uploaded!"
-                        })
-                        setPhotoUploaded(true)
-                      }}
-                      onUploadError={(error: Error) => {
-                        toast({
-                          title: "Error uploading photo"
-                        })
-                      }}
-                    />
-                  )}
+                  <div>
+                    {photoUploaded ? (
+                      <p className="text-sm">Image uploaded!</p>
+                    ) : (
+                      <UploadButton
+                        className="rounded-lg bg-slate-600/20 text-slate-800 outline-dotted outline-3"
+                        {...field}
+                        endpoint="profileImage"
+                        onClientUploadComplete={(res) => {
+                          form.setValue("profileImage", res?.[0].url)
+                          setPhotoUploaded(true)
+                        }}
+                        onUploadError={(error: Error) => {
+                          toast({ title: "Error uploading photo" })
+                        }}
+                      />
+                    )}
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>

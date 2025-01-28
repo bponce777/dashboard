@@ -5,7 +5,7 @@ import { Header } from "./components/Header/Header";
 import { CompanyInformation } from "./components/CompanyInformation";
 import { FooterCompany } from "./components/FooterCompany";
 
-export default async function page({ params }: { params: { companyId: string } }) {
+export default async function CompaniesPage({ params }: { params: { companyId: string } }) {
   const { userId } = auth();
   if (!userId) {
     return redirect("/login")
